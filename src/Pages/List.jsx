@@ -15,7 +15,7 @@ const TaskList = () => {
   const [editTask, setEditTask] = useState(null);
   const [filter, setFilter] = useState("all");
 
-  const API = `/api/todos`;
+  const API = `${import.meta.env.VITE_API_URL}/api/todos`;
 
   // Fetch all tasks from backend
   const fetchTasks = useCallback(async () => {
