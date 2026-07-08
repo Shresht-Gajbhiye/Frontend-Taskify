@@ -15,6 +15,7 @@ const TaskList = () => {
   const [editTask, setEditTask] = useState(null);
   const [filter, setFilter] = useState("all");
 
+  const token = localStorage.getItem("token");
   const API = `${import.meta.env.VITE_API_URL}/api/todos`;
 
   // Fetch all tasks from backend
@@ -22,8 +23,9 @@ const TaskList = () => {
     try {
       setError(null);
       const res = await fetch(`${API}/all`, {
-        credentials: "include", // This ensures your secure HTTP-only cookie is sent
+        credentials: "include",
         headers: {
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
@@ -35,7 +37,7 @@ const TaskList = () => {
     } finally {
       setLoading(false);
     }
-  }, [API]);
+  }, [token, API]);
 
   useEffect(() => {
     fetchTasks();
@@ -79,6 +81,7 @@ const TaskList = () => {
           method: "PATCH",
           credentials: "include",
           headers: {
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         },
@@ -101,6 +104,7 @@ const TaskList = () => {
         method: "PATCH",
         credentials: "include",
         headers: {
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
@@ -120,6 +124,7 @@ const TaskList = () => {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(formData),
     });
